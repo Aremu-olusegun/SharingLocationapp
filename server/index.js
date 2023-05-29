@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const cors = require("cors");
-const { Server } = require("socket");
-console.log(server);
+const { Server } = require("socket.io");
+const { disconnect } = require("process");
 
 const server = http.createServer(app);
 
@@ -20,8 +20,15 @@ app.get("/", (req, res) => {
   res.send("Hello server is started");
 });
 
+function disconnectEventHandler(id) {
+  console.log(`user ${id} disconnected from the socket server`);
+}
+
 io.on("connection", (socket) => {
   console.log(`user connected of the id: ${socket.id}`);
+  socket.on("disconnect", () => {
+    disconnectEventHandler(socket.id);
+  });
 });
 
 const PORT = 4000;
