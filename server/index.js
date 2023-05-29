@@ -25,7 +25,7 @@ function disconnectEventHandler(id) {
 }
 
 io.on("connection", (socket) => {
-  console.log(`user connected of the id: ${socket.id}`);
+  console.log(`user ${id} connected to the socket server`);
   socket.on("disconnect", () => {
     disconnectEventHandler(socket.id);
   });
